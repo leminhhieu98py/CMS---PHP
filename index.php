@@ -44,7 +44,7 @@ include 'includes/head.php';
                     <p class='lead'>by <a href='index.php'><?= $author ?></a></p>
                     <p><span class='glyphicon glyphicon-time'></span> Posted on <?= $createdAt ?></p>
                     <hr>
-                    <img class='img-responsive' src='<?= $img_url ?>' alt='cannot find img' style="height: 400px; overflow-x: hidden;">
+                    <img class='img-responsive' src='./images/<?= $img_url ?>' alt='cannot find img' style="height: 400px; overflow-x: hidden;">
                     <hr>
                     <p><?= $content ?></p>
                     <a class='btn btn-primary' href='#'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a>
