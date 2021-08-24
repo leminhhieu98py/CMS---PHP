@@ -25,6 +25,9 @@ include "includes/head.php";
                             include "includes/view_all_posts.php";
                         } else if (isset($_GET['source']) && $_GET['source'] == 'addpost') {
                             include "includes/add_post.php";
+                        } else if (isset($_GET['source']) && $_GET['source'] == 'editpost') {
+                            include "includes/edit_post.php";
+                        } else {
                         }
                         ?>
                     </div>

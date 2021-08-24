@@ -29,7 +29,7 @@
             $comments = $row['post_comment_count'];
             $date = $row['post_date'];
             $deleteLink = "posts.php?source=viewpost&&delete=" . $id;
-            $editLink = "posts.php?source=viewpost&&edit=" . $id;
+            $editLink = "posts.php?source=editpost&&edit=" . $id;
         ?>
             <tr>
                 <td><?= $key ?></td>

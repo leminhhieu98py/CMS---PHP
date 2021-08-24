@@ -18,6 +18,8 @@ if (isset($_POST['create_post'])) {
     $add_new_post = mysqli_query($connection, $query);
     if (!$add_new_post) {
         die("Query failed! " . mysqli_error($connection));
+    } else {
+        header("Location: posts.php?source=viewpost");
     }
 }
 
