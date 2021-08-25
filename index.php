@@ -34,14 +34,15 @@ include 'includes/head.php';
                 }
                 $select_posts = mysqli_query($connection, $query);
                 while ($row = mysqli_fetch_assoc($select_posts)) {
+                    $id = $row['post_id'];
                     $title = $row['post_title'];
                     $author = $row['post_author'];
                     $createdAt = $row['post_date'];
                     $img_url = $row['post_image'];
                     $content = $row['post_content'];
                 ?>
-                    <h2 style="margin-top: 100px;"><a href='#'><?= $title ?></a></h2>
-                    <p class='lead'>by <a href='index.php'><?= $author ?></a></p>
+                    <h2 style="margin-top: 100px;"><a href='post.php?p_id=<?= $id ?>'><?= $title ?></a></h2>
+                    <p class='lead'>by <a href=''><?= $author ?></a></p>
                     <p><span class='glyphicon glyphicon-time'></span> Posted on <?= $createdAt ?></p>
                     <hr>
                     <img class='img-responsive' src='./images/<?= $img_url ?>' alt='cannot find img' style="height: 400px; overflow-x: hidden;">

@@ -31,8 +31,24 @@ if (isset($_POST['create_post'])) {
         <input type="text" class="form-control" name="post_title">
     </div>
     <div class="form-group">
-        <label for="post_category_id">Post Category Id</label>
-        <input type="text" class="form-control" name="post_category_id">
+        <label for="post_category_id">Post Category</label>
+        <select class="form-control" name="post_category_id" id="post_category_id">
+            <?php
+            $query = "SELECT * FROM categories";
+            $all_categories = mysqli_query($connection, $query);
+            if (!$all_categories) {
+                die("Query failed! " . mysqli_error($connection));
+            } else {
+                while ($row = mysqli_fetch_assoc($all_categories)) {
+                    $cat_id = $row['cat_id'];
+                    $cat_title = $row['cat_title'];
+            ?>
+                    <option value="<?= $cat_id ?>"><?= $cat_title ?></option>
+            <?php
+                }
+            }
+            ?>
+        </select>
     </div>
     <div class="form-group">
         <label for="post_author">Post Author</label>

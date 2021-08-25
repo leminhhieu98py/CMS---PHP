@@ -35,7 +35,20 @@
                 <td><?= $key ?></td>
                 <td><?= $title ?></td>
                 <td><?= $author ?></td>
-                <td><?= $category ?></td>
+                <?php
+                $query = "SELECT * FROM categories WHERE cat_id = {$category}";
+                $selected_category = mysqli_query($connection, $query);
+                if (!$selected_category) {
+                    die("Query failed! " . mysqli_error($connection));
+                } else {
+                    while ($row = mysqli_fetch_assoc($selected_category)) {
+                        $cat_title = $row['cat_title'];
+                ?>
+                        <td><?= $cat_title ?></td>
+                <?php
+                    }
+                }
+                ?>
                 <td><?= $status ?></td>
                 <td><img src='../images/<?= $image ?>' alt="img" class="img-responsive" style="width: 150px;"></td>
                 <td><?= $tags ?></td>
