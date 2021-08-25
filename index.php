@@ -17,10 +17,6 @@ include 'includes/head.php';
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
-                <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
-                </h1>
 
                 <!-- Blog Posts -->
                 <?php
@@ -29,8 +25,6 @@ include 'includes/head.php';
                 if (isset($_POST['submit'])) {
                     $search = (isset($_POST['search'])) ? $_POST['search'] : '';
                     $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
-                    // $select_search_posts = mysqli_query($connection, $query);
-                    // $count = mysqli_num_rows($select_search_posts);
                 }
                 $select_posts = mysqli_query($connection, $query);
                 while ($row = mysqli_fetch_assoc($select_posts)) {
