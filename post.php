@@ -45,6 +45,10 @@
                         $search = (isset($_POST['search'])) ? $_POST['search'] : '';
                         $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
                     }
+                    if (isset($_GET['cat_id'])) {
+                        $cat_id = $_GET['cat_id'];
+                        $query = "SELECT * FROM posts WHERE post_category_id = {$cat_id} ";
+                    }
                     $select_posts = mysqli_query($connection, $query);
                     while ($row = mysqli_fetch_assoc($select_posts)) {
                         $title = $row['post_title'];
