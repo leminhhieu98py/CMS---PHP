@@ -85,6 +85,12 @@
 
                     if (!$create_comment) {
                         die("Query failed! " . mysqli_error($connection));
+                    } else {
+                        $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = {$id}";
+                        $create_comment = mysqli_query($connection, $query);
+                        if (!$create_comment) {
+                            die("Query failed! " . mysqli_error($connection));
+                        }
                     }
                 }
                 ?>
@@ -114,28 +120,31 @@
 
                 <!-- Comment -->
                 <?php
-                $query = "SELECT * FROM comments WHERE comment_status = 'approved'";
-                $approved_comments = mysqli_query($connection, $query);
-                if (!$approved_comments) {
-                    die("Query failed!" . mysqli_error($connection));
-                } else {
-                    while ($row = mysqli_fetch_assoc($approved_comments)) {
-                        $author = $row['comment_author'];
-                        $date = $row['comment_date'];
-                        $content = $row['comment_content'];
+                if (isset($_GET['p_id'])) {
+                    $id = $_GET['p_id'];
+                    $query = "SELECT * FROM comments WHERE comment_status = 'approved' AND comment_post_id = {$id}";
+                    $approved_comments = mysqli_query($connection, $query);
+                    if (!$approved_comments) {
+                        die("Query failed!" . mysqli_error($connection));
+                    } else {
+                        while ($row = mysqli_fetch_assoc($approved_comments)) {
+                            $author = $row['comment_author'];
+                            $date = $row['comment_date'];
+                            $content = $row['comment_content'];
                 ?>
-                        <div class="media">
-                            <a class="pull-left" href="#">
-                                <img class="media-object" src="http://placehold.it/64x64" alt="">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading"><?= $author ?>
-                                    <small><?= $date ?></small>
-                                </h4>
-                                <?= $content ?>
+                            <div class="media">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object" src="http://placehold.it/64x64" alt="">
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><?= $author ?>
+                                        <small><?= $date ?></small>
+                                    </h4>
+                                    <?= $content ?>
+                                </div>
                             </div>
-                        </div>
                 <?php
+                        }
                     }
                 }
                 ?>
