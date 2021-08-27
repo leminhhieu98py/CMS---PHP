@@ -37,13 +37,19 @@ include "includes/head.php";
 
                                 <!-- handle delete comments -->
                                 <?php
-                                if (isset($_GET['delete'])) {
+                                if (isset($_GET['delete']) && isset($_GET['p_id'])) {
                                     $comment_id_to_delete = $_GET['delete'];
+                                    $id = $_GET['p_id'];
                                     $query_delete_comment = "DELETE FROM comments WHERE comment_id = {$comment_id_to_delete}";
                                     $comment_to_delete = mysqli_query($connection, $query_delete_comment);
                                     if (!$comment_to_delete) {
                                         die("Query failed!" . mysqli_error($connection));
                                     } else {
+                                        $query = "UPDATE posts SET post_comment_count = post_comment_count - 1 WHERE post_id = {$id}";
+                                        $create_comment = mysqli_query($connection, $query);
+                                        if (!$create_comment) {
+                                            die("Query failed! " . mysqli_error($connection));
+                                        }
                                         header("Location: comments.php");
                                     }
                                 }
@@ -65,7 +71,7 @@ include "includes/head.php";
                                 ?>
 
 
-                                <!-- handle approve comments -->
+                                <!-- handle unapprove comments -->
                                 <?php
                                 if (isset($_GET['unapprove'])) {
                                     $comment_id_to_unapprove = $_GET['unapprove'];
@@ -92,7 +98,7 @@ include "includes/head.php";
                                     $status = $row['comment_status'];
                                     $date = $row['comment_date'];
                                     $post_id = $row['comment_post_id'];
-                                    $deleteLink = "comments.php?delete=" . $id;
+                                    $deleteLink = "comments.php?delete=" . $id . "&&p_id=" . $post_id;
                                     $approveLink = "comments.php?approve=" . $id;
                                     $unapproveLink = "comments.php?unapprove=" . $id;
                                     $post_id_query = "SELECT * FROM posts WHERE post_id = {$post_id}";

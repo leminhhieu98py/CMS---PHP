@@ -21,14 +21,14 @@ include 'includes/head.php';
                 <!-- Blog Posts -->
                 <?php
 
-                $query = 'SELECT * FROM posts';
+                $query = "SELECT * FROM posts WHERE post_status = 'published'";
                 if (isset($_POST['submit'])) {
                     $search = (isset($_POST['search'])) ? $_POST['search'] : '';
-                    $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
+                    $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%'  WHERE post_status = 'published'";
                 }
                 if (isset($_GET['cat_id'])) {
                     $cat_id = $_GET['cat_id'];
-                    $query = "SELECT * FROM posts WHERE post_category_id = {$cat_id} ";
+                    $query = "SELECT * FROM posts WHERE post_category_id = {$cat_id}  WHERE post_status = 'published'";
                 }
 
                 $select_posts = mysqli_query($connection, $query);
