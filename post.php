@@ -113,43 +113,33 @@
                 <!-- Posted Comments -->
 
                 <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </div>
-
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                        <!-- Nested Comment -->
+                <?php
+                $query = "SELECT * FROM comments WHERE comment_status = 'approved'";
+                $approved_comments = mysqli_query($connection, $query);
+                if (!$approved_comments) {
+                    die("Query failed!" . mysqli_error($connection));
+                } else {
+                    while ($row = mysqli_fetch_assoc($approved_comments)) {
+                        $author = $row['comment_author'];
+                        $date = $row['comment_date'];
+                        $content = $row['comment_content'];
+                ?>
                         <div class="media">
                             <a class="pull-left" href="#">
                                 <img class="media-object" src="http://placehold.it/64x64" alt="">
                             </a>
                             <div class="media-body">
-                                <h4 class="media-heading">Nested Start Bootstrap
-                                    <small>August 25, 2014 at 9:30 PM</small>
+                                <h4 class="media-heading"><?= $author ?>
+                                    <small><?= $date ?></small>
                                 </h4>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                                <?= $content ?>
                             </div>
                         </div>
-                        <!-- End Nested Comment -->
-                    </div>
-                </div>
+                <?php
+                    }
+                }
+                ?>
+
             </div>
 
             <!-- Blog Sidebar Column -->

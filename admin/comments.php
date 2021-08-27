@@ -34,6 +34,52 @@ include "includes/head.php";
                                 </tr>
                             </thead>
                             <tbody>
+
+                                <!-- handle delete comments -->
+                                <?php
+                                if (isset($_GET['delete'])) {
+                                    $comment_id_to_delete = $_GET['delete'];
+                                    $query_delete_comment = "DELETE FROM comments WHERE comment_id = {$comment_id_to_delete}";
+                                    $comment_to_delete = mysqli_query($connection, $query_delete_comment);
+                                    if (!$comment_to_delete) {
+                                        die("Query failed!" . mysqli_error($connection));
+                                    } else {
+                                        header("Location: comments.php");
+                                    }
+                                }
+                                ?>
+
+
+                                <!-- handle approve comments -->
+                                <?php
+                                if (isset($_GET['approve'])) {
+                                    $comment_id_to_approve = $_GET['approve'];
+                                    $query_approve_comment = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$comment_id_to_approve}";
+                                    $comment_to_approve = mysqli_query($connection, $query_approve_comment);
+                                    if (!$comment_to_approve) {
+                                        die("Query failed!" . mysqli_error($connection));
+                                    } else {
+                                        header("Location: comments.php");
+                                    }
+                                }
+                                ?>
+
+
+                                <!-- handle approve comments -->
+                                <?php
+                                if (isset($_GET['unapprove'])) {
+                                    $comment_id_to_unapprove = $_GET['unapprove'];
+                                    $query_unapprove_comment = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$comment_id_to_unapprove}";
+                                    $comment_to_unapprove = mysqli_query($connection, $query_unapprove_comment);
+                                    if (!$comment_to_unapprove) {
+                                        die("Query failed!" . mysqli_error($connection));
+                                    } else {
+                                        header("Location: comments.php");
+                                    }
+                                }
+                                ?>
+
+                                <!-- display comments -->
                                 <?php
                                 $query = "SELECT * FROM comments";
                                 $select_all_comments = mysqli_query($connection, $query);
@@ -44,9 +90,20 @@ include "includes/head.php";
                                     $comment = $row['comment_content'];
                                     $email = $row['comment_email'];
                                     $status = $row['comment_status'];
-                                    $responseTo = 'later';
                                     $date = $row['comment_date'];
-                                    $deleteLink = "comments.php?source=viewcomment&&delete=" . $id;
+                                    $post_id = $row['comment_post_id'];
+                                    $deleteLink = "comments.php?delete=" . $id;
+                                    $approveLink = "comments.php?approve=" . $id;
+                                    $unapproveLink = "comments.php?unapprove=" . $id;
+                                    $post_id_query = "SELECT * FROM posts WHERE post_id = {$post_id}";
+                                    $post_id_commented = mysqli_query($connection, $post_id_query);
+                                    if (!$post_id_commented) {
+                                        die("Query failed!" . mysqli_error($connection));
+                                    } else {
+                                        while ($row_in_post = mysqli_fetch_assoc($post_id_commented)) {
+                                            $responseTo = $row_in_post['post_title'];
+                                        }
+                                    }
                                 ?>
                                     <tr>
                                         <td><?= $key ?></td>
@@ -54,26 +111,12 @@ include "includes/head.php";
                                         <td><?= $comment ?></td>
                                         <td><?= $email ?></td>
                                         <td><?= $status ?></td>
-                                        <td><?= $responseTo ?></td>
+                                        <td><a href="../post.php?p_id=<?= $post_id ?>"><?= $responseTo ?></a></td>
                                         <td><?= $date ?></td>
-                                        <td><a href=<?= $deleteLink ?>>Delete</a> | <a href="">Approve</a> | <a href="">Unapprove</a></td>
+                                        <td><a href=<?= $deleteLink ?>>Delete</a> | <a href="<?= $approveLink ?>">Approve</a> | <a href="<?= $unapproveLink ?>">Unapprove</a></td>
                                     </tr>
                                 <?php
                                     $key++;
-                                }
-                                ?>
-
-                                <!-- delete post handle -->
-                                <?php
-                                if (isset($_GET['delete'])) {
-                                    $post_id = $_GET['delete'];
-                                    $query = "DELETE FROM posts WHERE post_id = {$post_id}";
-                                    $delete_post = mysqli_query($connection, $query);
-                                    if (!$delete_post) {
-                                        die("Query failed " . mysqli_error($connection));
-                                    } else {
-                                        header("Location: posts.php?source=viewpost");
-                                    }
                                 }
                                 ?>
                             </tbody>
