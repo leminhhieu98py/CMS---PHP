@@ -54,7 +54,7 @@
                 <td><?= $tags ?></td>
                 <td><?= $comments ?></td>
                 <td><?= $date ?></td>
-                <td><a href=<?= $deleteLink ?>>Delete</a> <a href=<?= $editLink ?>>Edit</a></td>
+                <td><a onclick="return confirm('Are you sure?')" href=<?= $deleteLink ?>>Delete</a> <a href=<?= $editLink ?>>Edit</a></td>
             </tr>
         <?php
             $key++;

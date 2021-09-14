@@ -15,7 +15,7 @@ function load_category()
         <tr>
             <td><?= $key ?></td>
             <td><?= $cat_title ?></td>
-            <td><a href=<?= $deleteLink ?>>Delete</a> <a href=<?= $editLink ?>>Edit</a></td>
+            <td><a onclick="return confirm('Are you sure?')" href=<?= $deleteLink ?>>Delete</a> <a href=<?= $editLink ?>>Edit</a></td>
         </tr>
     <?php
         $key++;

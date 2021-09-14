@@ -119,7 +119,7 @@ include "includes/head.php";
                                         <td><?= $status ?></td>
                                         <td><a href="../post.php?p_id=<?= $post_id ?>"><?= $responseTo ?></a></td>
                                         <td><?= $date ?></td>
-                                        <td><a href=<?= $deleteLink ?>>Delete</a> | <a href="<?= $approveLink ?>">Approve</a> | <a href="<?= $unapproveLink ?>">Unapprove</a></td>
+                                        <td><a onclick="return confirm('Are you sure?')" href=<?= $deleteLink ?>>Delete</a> | <a href="<?= $approveLink ?>">Approve</a> | <a href="<?= $unapproveLink ?>">Unapprove</a></td>
                                     </tr>
                                 <?php
                                     $key++;
