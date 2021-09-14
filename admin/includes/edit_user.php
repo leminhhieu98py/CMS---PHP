@@ -2,30 +2,28 @@
 // handle submit form update
 if (isset($_POST['edit_user'])) {
     $id = $_GET['edit'];
-    $title = $_POST['post_title'];
-    $author = $_POST['post_author'];
-    $category = $_POST['post_category_id'];
-    $status = $_POST['post_status'];
-    $image = $_FILES['post_image']['name'];
-    $tmp_image = $_FILES['post_image']['tmp_name'];
-    $tags = $_POST['post_tags'];
-    $content = $_POST['post_content'];
+    $username = $_POST['username'];
+    $firstname = $_POST['user_firstname'];
+    $lastname = $_POST['user_lastname'];
+    $email = $_POST['user_email'];
+    $role = $_POST['user_role'];
+    $image = $_FILES['user_image']['name'];
+    $tmp_image = $_FILES['user_image']['tmp_name'];
     move_uploaded_file($tmp_image, "../images/$image");
-    $query = "UPDATE posts SET ";
-    $query .= "post_title = '{$title}',";
-    $query .= "post_author = '{$author}',";
-    $query .= "post_category_id = '{$category}',";
-    $query .= "post_status = '{$status}',";
-    $query .= "post_image = '{$image}',";
-    $query .= "post_tags = '{$tags}',";
-    $query .= "post_content = '{$content}' ";
-    $query .= "WHERE post_id = '{$id}'";
+    $query = "UPDATE users SET ";
+    $query .= "username = '{$username}',";
+    $query .= "user_firstname = '{$firstname}',";
+    $query .= "user_lastname = '{$lastname}',";
+    $query .= "user_email = '{$email}',";
+    $query .= "user_role = '{$role}',";
+    $query .= "user_image = '{$image}' ";
+    $query .= "WHERE user_id = '{$id}'";
 
-    $add_new_post = mysqli_query($connection, $query);
-    if (!$add_new_post) {
+    $update_this_user = mysqli_query($connection, $query);
+    if (!$update_this_user) {
         die("Query failed! " . mysqli_error($connection));
     } else {
-        header("Location: posts.php?source=viewpost");
+        header("Location: users.php?source=viewuser");
     }
 }
 
@@ -45,26 +43,21 @@ if (isset($_GET['edit'])) {
             $username = $row['username'];
             $firstname = $row['user_firstname'];
             $lastname = $row['user_lastname'];
-            $image = $row['user_image'];
             $email = $row['user_email'];
             $role = $row['user_role'];
 ?>
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" value="<?= $aaa ?>">
-                </div>
-                <div class="form-group">
-                    <label for="user_password">Password</label>
-                    <input type="text" class="form-control" name="user_password" value="<?= $aaa ?>">
+                    <input type="text" class="form-control" name="username" value="<?= $username ?>">
                 </div>
                 <div class="form-group">
                     <label for="user_firstname">Firstname</label>
-                    <input type="text" class="form-control" name="user_firstname" value="<?= $aaa ?>">
+                    <input type="text" class="form-control" name="user_firstname" value="<?= $firstname ?>">
                 </div>
                 <div class="form-group">
                     <label for="user_lastname">Lastname</label>
-                    <input type="text" class="form-control" name="user_lastname" value="<?= $aaa ?>">
+                    <input type="text" class="form-control" name="user_lastname" value="<?= $lastname ?>">
                 </div>
                 <div class="form-group">
                     <label for="user_image">Avatar</label>
@@ -72,11 +65,11 @@ if (isset($_GET['edit'])) {
                 </div>
                 <div class="form-group">
                     <label for="user_email">Email</label>
-                    <input type="text" class="form-control" name="user_email" value="<?= $aaa ?>">
+                    <input type="text" class="form-control" name="user_email" value="<?= $email ?>">
                 </div>
                 <div class="form-group">
                     <label for="user_role">Role</label>
-                    <input type="text" class="form-control" name="user_role" value="<?= $aaa ?>">
+                    <input type="text" class="form-control" name="user_role" value="<?= $role ?>">
                 </div>
                 <button class="btn btn-primary" type="submit" name="edit_user">Update this user</button>
             </form>
