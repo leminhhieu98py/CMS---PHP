@@ -38,23 +38,23 @@
                 <td><?= $email ?></td>
                 <td><?= $role ?></td>
                 <td><?= $date ?></td>
-                <td><a href=<?= $deleteLink ?>>Delete</a> <a href=<?= $editLink ?>>Edit</a></td>
+                <td><a onclick="return confirm('Are you sure?')" href=<?= $deleteLink ?>>Delete</a> <a href=<?= $editLink ?>>Edit</a></td>
             </tr>
         <?php
             $key++;
         }
         ?>
 
-        <!-- delete post handle -->
+        <!-- delete user handle -->
         <?php
         if (isset($_GET['delete'])) {
-            $post_id = $_GET['delete'];
-            $query = "DELETE FROM posts WHERE post_id = {$post_id}";
-            $delete_post = mysqli_query($connection, $query);
-            if (!$delete_post) {
+            $user_id = $_GET['delete'];
+            $query = "DELETE FROM users WHERE user_id = {$user_id}";
+            $delete_user = mysqli_query($connection, $query);
+            if (!$delete_user) {
                 die("Query failed " . mysqli_error($connection));
             } else {
-                header("Location: posts.php?source=viewpost");
+                header("Location: users.php?source=viewuser");
             }
         }
         ?>
